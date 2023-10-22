@@ -56,7 +56,7 @@ services:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9092
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: kafka-connect-group
+      CONNECT_GROUP_ID: kafka-connect-cloud-group
       CONNECT_CONFIG_STORAGE_TOPIC: _connect-configs
       CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
       CONNECT_STATUS_STORAGE_TOPIC: _connect-status
@@ -71,6 +71,6 @@ services:
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
     volumes:
-      - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.properties
+      - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.json
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
       - ./connect/jars/postgresql-42.4.3.jar:/usr/share/java/kafka-connect-jdbc/jars/postgresql-42.4.3.jar
