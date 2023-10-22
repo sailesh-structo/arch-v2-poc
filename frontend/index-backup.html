@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE Example</title>
+  </head>
+  <body>
+    <h1>Structo</h1>
+    <input type="file" id="fileInput" multiple />
+    <button id="uploadButton">Upload Files</button>
+
+    <ul id="fileList"></ul>
+
+    <div id="output"></div>
+
+    <script>
+      const fileInput = document.getElementById("fileInput");
+      const fileList = document.getElementById("fileList");
+      const uploadButton = document.getElementById("uploadButton");
+
+      let selectedFiles = [];
+
+      fileInput.addEventListener("change", (e) => {
+        selectedFiles = Array.from(e.target.files);
+        fileList.innerHTML = "";
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          const listItem = document.createElement("li");
+          listItem.textContent = file.name;
+          fileList.appendChild(listItem);
+        }
+      });
+
+      uploadButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        if (selectedFiles.length === 0) {
+          console.error("Please select files to upload.");
+          return;
+        }
+
+        const formData = new FormData();
+        selectedFiles.forEach((file) => {
+          formData.append("files", file);
+        });
+
+        await fetch("http://localhost:4000/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Files uploaded successfully.");
+            } else {
+              console.log("File upload failed.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error uploading files:", error);
+            console.error("An error occurred while uploading files.");
+          });
+        return;
+      });
+
+      // Create an EventSource object to establish the SSE connection
+      const eventSource = new EventSource("http://localhost:4000/sse");
+      const outputDiv = document.getElementById("output");
+      // Handle SSE messages
+      eventSource.onmessage = (event) => {
+        // const message = JSON.parse(event.data);
+        // appendToOutputDiv(message.message);
+        console.log(event);
+        appendToOutputDiv(event.data);
+      };
+      // Function to append messages to the output div
+      function appendToOutputDiv(message) {
+        const p = document.createElement("p");
+        p.textContent = message;
+        outputDiv.appendChild(p);
+      }
+    </script>
+  </body>
+</html>
