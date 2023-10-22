@@ -91,6 +91,8 @@ services:
       - "4000:4000"
     environment:
       KAFKA_BROKER_LIST: kafka:29092
+      DB_CONNECTION_STRING: postgres://my_user:S3cret@postgres:5432/my_db
+      UPLOAD_FILE_PATH: /uploads
     volumes:
       - uploads:/uploads
 

@@ -61,10 +61,11 @@ export class AppController {
 
     const parts = req.files();
     for await (const part of parts) {
-      const filePath = `/uploads/${part.filename}`;
+      const filePath = `${process.env.UPLOAD_FILE_PATH}/${part.filename}`;
       await pump(part.file, fs.createWriteStream(filePath));
-
-      this.client.emit('start_job', { jobId: randomUUID(), filePath });
+      const message = { jobId: randomUUID(), filePath };
+      this.client.emit('start_job', message);
+      console.log('start_job emitted', message);
     }
     res.send();
   }
@@ -84,5 +85,10 @@ export class AppController {
   consumeLine(@Payload() payload) {
     console.log(payload);
     this.resp.next({ data: payload });
+  }
+
+  @Get('job_history')
+  async getJobHistory() {
+    return await this.appService.getJobHistory();
   }
 }
