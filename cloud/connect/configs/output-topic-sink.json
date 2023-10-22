@@ -1,0 +1,18 @@
+{
+  "name": "output-topic-sink",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": 1,
+    "topics": "output",
+    "connection.url": "jdbc:postgresql://postgres:5432/my_db",
+    "connection.user": "my_user",
+    "connection.password": "S3cret",
+    "auto.create": true,
+    "insert.mode": "upsert",
+    "pk.mode": "record_value",
+    "pk.fields": "jobId",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true"
+  }
+}
