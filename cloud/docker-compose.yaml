@@ -54,12 +54,12 @@ services:
     #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9092
-      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: kafka-connect-cloud-group
-      CONNECT_CONFIG_STORAGE_TOPIC: _connect-configs
-      CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: _connect-status
+      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-status
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
