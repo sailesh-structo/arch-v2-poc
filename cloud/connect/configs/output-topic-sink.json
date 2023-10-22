@@ -4,7 +4,7 @@
     "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
     "tasks.max": 1,
     "topics": "output",
-    "connection.url": "jdbc:postgresql://postgres:5432/my_db",
+    "connection.url": "jdbc:postgresql://localhost:5432/my_db",
     "connection.user": "my_user",
     "connection.password": "S3cret",
     "auto.create": true,
