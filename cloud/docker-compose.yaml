@@ -54,13 +54,13 @@ services:
     #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9092
-      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
+      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect-1
       CONNECT_LISTENERS: http://localhost:8083
       CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: kafka-connect-cloud-group
-      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
-      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-status
+      CONNECT_GROUP_ID: kafka-connect-cloud-group-1
+      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-1-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-1-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-1-status
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
@@ -85,13 +85,13 @@ services:
     #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9093
-      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
+      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect-2
       CONNECT_LISTENERS: http://localhost:8084
       CONNECT_REST_PORT: 8084
-      CONNECT_GROUP_ID: kafka-connect-cloud-group
-      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
-      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-status
+      CONNECT_GROUP_ID: kafka-connect-cloud-group-2
+      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-2-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-2-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-2-status
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
