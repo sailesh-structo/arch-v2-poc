@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 type Job = {
+  machineId: string;
   jobId: string;
   status: string;
 };
@@ -21,6 +22,7 @@ const History = () => {
       <table>
         <thead>
           <tr>
+            <th>Machine ID</th>
             <th>Job ID</th>
             <th>Job Status</th>
           </tr>
@@ -28,6 +30,7 @@ const History = () => {
         <tbody>
           {history.map((job) => (
             <tr key={job.jobId}>
+              <td>{job.machineId}</td>
               <td>{job.jobId}</td>
               <td style={{ textAlign: "right" }}>{job.status}</td>
             </tr>

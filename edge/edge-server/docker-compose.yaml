@@ -69,6 +69,8 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
+    depends_on:
+      - kafka
     volumes:
       - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.properties
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
@@ -80,6 +82,8 @@ services:
     container_name: core
     environment:
       KAFKA_BROKER_LIST: kafka:29092
+    depends_on:
+      - kafka
     volumes:
       - uploads:/uploads
 
@@ -93,6 +97,10 @@ services:
       KAFKA_BROKER_LIST: kafka:29092
       DB_CONNECTION_STRING: postgres://my_user:S3cret@postgres:5432/my_db
       UPLOAD_FILE_PATH: /uploads
+      MACHINE_ID: ${MACHINE_ID}
+    depends_on:
+      - kafka
+      - postgres
     volumes:
       - uploads:/uploads
 

@@ -57,7 +57,9 @@ public class Main {
                 try {
                     JobMessage jobMessage = objectMapper.readValue(message, JobMessage.class);
                     String jobId = jobMessage.getJobId();
-                    String filePath = jobMessage.getFilePath();
+                    String filePath = jobMessage.getFilePath();                    
+                    String machineId = jobMessage.getMachineId();
+
 
                     // Process the job
                     int targetValue = processJob(filePath);
@@ -65,8 +67,7 @@ public class Main {
 
                     // Send output messages with jobId and counter
                     while (counter <= targetValue) {
-                        String m = "{\"schema\":{\"type\":\"struct\",\"fields\":[{\"type\":\"string\",\"field\":\"jobId\"},{\"type\":\"int32\",\"field\":\"status\"}]}," + 
-                        "\"payload\":{\"jobId\":\"" + jobId + "\",\"status\":" + counter + "}}";
+                        String m = "{\"schema\": {\"type\": \"struct\",\"fields\": [{\"type\": \"string\",\"field\": \"jobId\"},{\"type\": \"string\",\"field\": \"machineId\"},{\"type\": \"int32\",\"field\": \"status\"}]},\"payload\": {\"jobId\": \""+ jobId +"\",\"status\": "+  counter +",\"machineId\": \""+ machineId +"\"}}";
                         
                         JSONParser parser = new JSONParser();  
                         JSONObject json = null;

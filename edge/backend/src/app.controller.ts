@@ -63,7 +63,11 @@ export class AppController {
     for await (const part of parts) {
       const filePath = `${process.env.UPLOAD_FILE_PATH}/${part.filename}`;
       await pump(part.file, fs.createWriteStream(filePath));
-      const message = { jobId: randomUUID(), filePath };
+      const message = {
+        jobId: randomUUID(),
+        filePath,
+        machineId: process.env.MACHINE_ID,
+      };
       this.client.emit('start_job', message);
       console.log('start_job emitted', message);
     }

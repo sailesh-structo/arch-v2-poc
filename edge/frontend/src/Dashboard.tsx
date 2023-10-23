@@ -80,6 +80,7 @@ function Dashboard() {
         </div>
         {currentState ? (
           <div style={{ display: "flex", gap: "1rem" }}>
+            <span>Machine ID: {currentState.machineId}</span>
             <span>JOB ID: {currentState.jobId}</span>
             <span>Status: {statusMap[currentState.status]}</span>
           </div>
@@ -99,6 +100,7 @@ function Dashboard() {
                 key={`${payload.jobId}-${payload.status}`}
                 style={{ display: "flex", gap: "1rem" }}
               >
+                <span>Machine ID: {payload.machineId}</span>
                 <span>JOB ID: {payload.jobId}</span>
                 <span>Status: {payload.status}</span>
               </div>
