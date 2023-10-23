@@ -53,7 +53,7 @@ services:
     # ports:
     #   - "8083:8083"
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: localhost:9092
+      CONNECT_BOOTSTRAP_SERVERS: "localhost:9092,localhost:9093"
       CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: kafka-connect-cloud-group
