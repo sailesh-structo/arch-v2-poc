@@ -38,7 +38,7 @@ async function bootstrap() {
       // https: httpsOptions,
     }),
   );
-  app.register(FastifyMultipart);
+  app.register(FastifyMultipart as any);
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.KAFKA,
     options: {
