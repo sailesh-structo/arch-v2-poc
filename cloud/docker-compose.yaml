@@ -55,6 +55,7 @@ services:
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9092
       CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
+      CONNECT_LISTENERS: localhost:8083
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: kafka-connect-cloud-group
       CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
@@ -85,6 +86,7 @@ services:
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9093
       CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
+      CONNECT_LISTENERS: localhost:8084
       CONNECT_REST_PORT: 8084
       CONNECT_GROUP_ID: kafka-connect-cloud-group
       CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
