@@ -45,21 +45,53 @@ services:
       - POSTGRES_USER=my_user
       - POSTGRES_DB=my_db
 
-  connect:
+  connect-1:
     image: confluentinc/cp-kafka-connect:7.5.0
-    hostname: connect
-    container_name: connect
+    hostname: connect-1
+    container_name: connect-1
     network_mode: "host"
     # ports:
     #   - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: localhost:9092
-      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect
+      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect-1
+      CONNECT_LISTENERS: http://localhost:8083
       CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: kafka-connect-cloud-group
-      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-configs
-      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-status
+      CONNECT_GROUP_ID: kafka-connect-cloud-1-group
+      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-1-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-1-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-1-status
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "true"
+      CONNECT_PLUGIN_PATH: /usr/share/java
+      CONNECTOR_PLUGINS: /usr/share/java
+      CONNECTOR_CLASSPATH: /usr/share/java
+    volumes:
+      - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.json
+      - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
+      - ./connect/jars/postgresql-42.4.3.jar:/usr/share/java/kafka-connect-jdbc/jars/postgresql-42.4.3.jar
+
+  connect-2:
+    image: confluentinc/cp-kafka-connect:7.5.0
+    hostname: connect-2
+    container_name: connect-2
+    network_mode: "host"
+    # ports:
+    #   - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: localhost:9092
+      CONNECT_REST_ADVERTISED_HOST_NAME: cloud-connect-2
+      CONNECT_LISTENERS: http://localhost:8084
+      CONNECT_REST_PORT: 8084
+      CONNECT_GROUP_ID: kafka-connect-cloud-2-group
+      CONNECT_CONFIG_STORAGE_TOPIC: _cloud-connect-2-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: _cloud-connect-2-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: _cloud-connect-2-status
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
