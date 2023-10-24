@@ -67,7 +67,7 @@ public class Main {
 
                     // Send output messages with jobId and counter
                     while (counter <= targetValue) {
-                        String m = "{\"schema\": {\"type\": \"struct\",\"fields\": [{\"type\": \"string\",\"field\": \"jobId\"},{\"type\": \"string\",\"field\": \"machineId\"},{\"type\": \"int32\",\"field\": \"status\"}]},\"payload\": {\"jobId\": \""+ jobId +"\",\"status\": "+  counter +",\"machineId\": \""+ machineId +"\"}}";
+                        String m = "{\"schema\": {\"type\": \"struct\",\"fields\": [{\"type\": \"string\",\"field\": \"jobId\"},{\"type\": \"string\",\"field\": \"machineId\"},{\"type\": \"int32\",\"field\": \"status\"},{\"type\": \"int64\",\"field\": \"timestamp\"}]},\"payload\": {\"jobId\": \""+ jobId +"\",\"status\": "+  counter +",\"machineId\": \""+ machineId +"\",\"timestamp\":"+ System.currentTimeMillis() +"}}";
                         
                         JSONParser parser = new JSONParser();  
                         JSONObject json = null;

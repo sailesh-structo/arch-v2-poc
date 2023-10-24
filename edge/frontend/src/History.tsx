@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 type Job = {
   machineId: string;
   jobId: string;
-  status: string;
+  status: number;
+  timestamp: number;
 };
 
 const BACKEND_URL = `http://${import.meta.env.VITE_BACKEND_URL}`;
@@ -17,26 +18,19 @@ const History = () => {
   }, []);
   return (
     <div>
-      <h1>Job History</h1>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Machine ID</th>
-            <th>Job ID</th>
-            <th>Job Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {history.map((job) => (
-            <tr key={job.jobId}>
-              <td>{job.machineId}</td>
-              <td>{job.jobId}</td>
-              <td style={{ textAlign: "right" }}>{job.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {history?.map((job) => (
+          <div
+            key={job.jobId}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <div>Machine ID: {job.machineId}</div>
+            <div>Job ID: {job.jobId}</div>
+            <div>Job Status: {job.status}</div>
+            <div>Timestamp: {new Date(job.timestamp).toString()}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

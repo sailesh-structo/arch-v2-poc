@@ -6,6 +6,8 @@ const BACKEND_URL = `http://${import.meta.env.VITE_BACKEND_URL}`;
 function Dashboard() {
   const [fileList, setFileList] = useState<File[]>([]);
   const [events, setStatus] = useState<any>([]);
+  const [lastState, setLastState] = useState<any>(null);
+  const [totalJobs, setTotalJobs] = useState<number>(0);
 
   const onFileChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const selectedFiles = Array.from(e.target?.files as FileList);
@@ -57,6 +59,20 @@ function Dashboard() {
     };
   }, []);
 
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/job_history`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.length === 0) {
+          return null;
+        }
+        const lastState = data[data.length - 1];
+        setLastState(lastState);
+        setTotalJobs(data.length);
+        return;
+      });
+  }, []);
+
   const currentState = events[events.length - 1]?.payload;
 
   return (
@@ -72,24 +88,57 @@ function Dashboard() {
         style={{
           display: "flex",
           flexDirection: "column",
-          paddingBottom: "1rem",
+          paddingBottom: "2rem",
         }}
       >
         <div>
-          <b>Current state of the machine: </b>
+          <b>Total Jobs completed: {totalJobs}</b>
         </div>
-        {currentState ? (
-          <div style={{ display: "flex", gap: "1rem" }}>
-            <span>Machine ID: {currentState.machineId}</span>
-            <span>JOB ID: {currentState.jobId}</span>
-            <span>Status: {statusMap[currentState.status]}</span>
+        <div style={{ display: "flex", gap: "2rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div>
+              <b>Last Job Details: </b>
+            </div>
+            {lastState ? (
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span>Machine ID: {lastState.machineId}</span>
+                <span>JOB ID: {lastState.jobId}</span>
+                <span>Status: {statusMap[lastState.status]}</span>
+                <span>Timestamp: {`${new Date(lastState.timestamp)}`}</span>
+              </div>
+            ) : (
+              <span>Not Available</span>
+            )}
           </div>
-        ) : (
-          <div>IDLE</div>
-        )}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div>
+              <b>Current state of the machine: </b>
+            </div>
+            {currentState ? (
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span>Machine ID: {currentState.machineId}</span>
+                <span>JOB ID: {currentState.jobId}</span>
+                <span>Status: {statusMap[currentState.status]}</span>
+                <span>Timestamp: {`${new Date(currentState.timestamp)}`}</span>
+              </div>
+            ) : (
+              <div>IDLE</div>
+            )}
+          </div>
+        </div>
       </div>
       {events.length > 0 ? (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div>
             <b>Real time Events: </b>
           </div>
@@ -98,11 +147,15 @@ function Dashboard() {
             return (
               <div
                 key={`${payload.jobId}-${payload.status}`}
-                style={{ display: "flex", gap: "1rem" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
               >
                 <span>Machine ID: {payload.machineId}</span>
                 <span>JOB ID: {payload.jobId}</span>
                 <span>Status: {payload.status}</span>
+                <span>Timestamp: {`${new Date(payload.timestamp)}`}</span>
               </div>
             );
           })}
