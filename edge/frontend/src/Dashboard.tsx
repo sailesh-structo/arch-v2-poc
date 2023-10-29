@@ -154,7 +154,7 @@ function Dashboard() {
               >
                 <span>Machine ID: {payload.machineId}</span>
                 <span>JOB ID: {payload.jobId}</span>
-                <span>Status: {payload.status}</span>
+                <span>Status: {statusMap[payload.status]}</span>
                 <span>Timestamp: {`${new Date(payload.timestamp)}`}</span>
               </div>
             );

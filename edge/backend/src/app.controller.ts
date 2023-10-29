@@ -74,8 +74,8 @@ export class AppController {
     res.send();
   }
 
-  @Get('example')
-  root(@Res() res) {
+  @Get('app')
+  app(@Res() res) {
     res.sendFile('index.html', { root: 'public' });
   }
 

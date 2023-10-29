@@ -18,6 +18,9 @@ const History = () => {
   }, []);
   return (
     <div>
+      <div style={{ paddingBottom: "1rem" }}>
+        <b>Total Jobs completed: {history.length}</b>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {history?.map((job) => (
           <div

@@ -74,9 +74,43 @@ services:
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
     volumes:
-      - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.json
+      - ./connect/configs/output-topic-sink.json:/etc/kafka-connect/output-topic-sink.json
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
       - ./connect/jars/postgresql-42.4.3.jar:/usr/share/java/kafka-connect-jdbc/jars/postgresql-42.4.3.jar
+    command:
+      - bash
+      - -c
+      - |
+        /etc/confluent/docker/run & 
+        echo "Waiting for Kafka Connect to start listening on kafka-connect ⏳"
+        while [ $$(curl -s -o /dev/null -w %{http_code} http://localhost:8083/connectors) -eq 000 ] ; do 
+          echo -e $$(date) " Kafka Connect listener HTTP state: " $$(curl -s -o /dev/null -w %{http_code} http://localhost:8083/connectors) " (waiting for 200)"
+          sleep 5 
+        done
+        nc -vz localhost 8083
+        echo -e "\n--\n+> Configuring connectors"
+        curl  -X POST \
+          'localhost:8083/connectors' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "name": "output-topic-sink-cloud",
+          "config": {
+            "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+            "tasks.max": 1,
+            "topics": "output",
+            "connection.url": "jdbc:postgresql://localhost:5432/my_db",
+            "connection.user": "my_user",
+            "connection.password": "S3cret",
+            "auto.create": true,
+            "insert.mode": "upsert",
+            "pk.mode": "record_value",
+            "pk.fields": "jobId",
+            "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+            "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+            "value.converter.schemas.enable": "true"
+          }
+        }'
+        sleep infinity
 
   connect-2:
     image: confluentinc/cp-kafka-connect:7.5.0
@@ -108,3 +142,37 @@ services:
       - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.json
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
       - ./connect/jars/postgresql-42.4.3.jar:/usr/share/java/kafka-connect-jdbc/jars/postgresql-42.4.3.jar
+    command:
+      - bash
+      - -c
+      - |
+        /etc/confluent/docker/run & 
+        echo "Waiting for Kafka Connect to start listening on kafka-connect ⏳"
+        while [ $$(curl -s -o /dev/null -w %{http_code} http://localhost:8084/connectors) -eq 000 ] ; do 
+          echo -e $$(date) " Kafka Connect listener HTTP state: " $$(curl -s -o /dev/null -w %{http_code} http://localhost:8084/connectors) " (waiting for 200)"
+          sleep 5 
+        done
+        nc -vz localhost 8084
+        echo -e "\n--\n+> Configuring connectors"
+        curl  -X POST \
+          'localhost:8084/connectors' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "name": "output-topic-sink-cloud",
+          "config": {
+            "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+            "tasks.max": 1,
+            "topics": "output",
+            "connection.url": "jdbc:postgresql://localhost:5432/my_db",
+            "connection.user": "my_user",
+            "connection.password": "S3cret",
+            "auto.create": true,
+            "insert.mode": "upsert",
+            "pk.mode": "record_value",
+            "pk.fields": "jobId",
+            "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+            "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+            "value.converter.schemas.enable": "true"
+          }
+        }'
+        sleep infinity
