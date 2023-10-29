@@ -1,0 +1,13 @@
+{
+  "name": "electron-wrapper",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "package:linux": "electron-forge package --platform=linux --arch=x64"
+  },
+  "devDependencies": {
+    "electron": "^27.0.2"
+  }
+}
