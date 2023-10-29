@@ -13,7 +13,7 @@ export const jobsRouter = createTRPCRouter({
       };
     }),
   getAllJobs: publicProcedure.query(async () => {
-    console.log("getJobs");
+    console.log("getAllJobs");
     const result = await db.query.output.findMany({
       orderBy: [desc(output.timestamp)],
     });
@@ -22,7 +22,7 @@ export const jobsRouter = createTRPCRouter({
   getMachineJobs: publicProcedure
     .input(z.object({ machineId: z.string() }))
     .query(async ({ input }) => {
-      console.log("getJobs");
+      console.log("getMachineJobs");
       const result = await db.query.output.findMany({
         where: eq(output.machineId, input.machineId),
         orderBy: [desc(output.timestamp)],

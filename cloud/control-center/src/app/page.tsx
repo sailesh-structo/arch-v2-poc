@@ -3,9 +3,9 @@ import { api } from "~/trpc/server";
 import { statusMap } from "~/configs/status";
 
 export default async function Home() {
-  const hello = await api.jobs.hello.query({
-    text: "from Structo Control center",
-  });
+  // const hello = await api.jobs.hello.query({
+  //   text: "from Structo Control center",
+  // });
   const jobs = await api.jobs.getAllJobs.query();
 
   return (
@@ -13,7 +13,8 @@ export default async function Home() {
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <div className="flex flex-col items-center gap-2">
           <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
+            {/* {hello ? hello.greeting : "Loading tRPC query..."} */}
+            Hello
           </p>
         </div>
         <div className="flex flex-col gap-5">
