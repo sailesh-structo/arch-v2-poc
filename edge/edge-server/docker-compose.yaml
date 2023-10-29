@@ -116,5 +116,17 @@ services:
     depends_on:
       - backend
 
+  remote-actions:
+    build:
+      context: ../remote-actions
+    container_name: remote-actions
+    environment:
+      SOURCE_BROKER: 13.212.193.234:9095
+      SOURCE_TOPIC: start_job_${MACHINE_ID}
+      TARGET_BROKER: kafka:29092
+      TARGET_TOPIC: start_job
+      MACHINE_ID: ${MACHINE_ID}
+    depends_on:
+      - kafka
 volumes:
   uploads:
