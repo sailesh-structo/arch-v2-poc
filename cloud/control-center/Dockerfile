@@ -1,11 +1,12 @@
-FROM node:18 AS builder
+FROM node:18-alpine AS builder
+RUN apk add --no-cache libc6-compat openssl1.1-compat
 WORKDIR /app
 COPY . .
 RUN yarn --frozen-lockfile
 RUN SKIP_ENV_VALIDATION=1 yarn build
 
 
-FROM node:18 AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
