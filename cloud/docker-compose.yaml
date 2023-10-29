@@ -176,3 +176,13 @@ services:
           }
         }'
         sleep infinity
+
+  control-center:
+    build:
+      context: ./control-center
+    container_name: control-center
+    working_dir: /app
+    ports:
+      - "80:3000"
+    environment:
+      DATABASE_URL: postgres://my_user:S3cret@localhost:5432/my_db
