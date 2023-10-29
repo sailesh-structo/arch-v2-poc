@@ -1,9 +1,7 @@
 FROM node:18 AS builder
-RUN apk add --no-cache libc6-compat openssl1.1-compat
 WORKDIR /app
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml\* ./
-RUN yarn --frozen-lockfile
 COPY . .
+RUN yarn --frozen-lockfile
 RUN SKIP_ENV_VALIDATION=1 yarn build
 
 
