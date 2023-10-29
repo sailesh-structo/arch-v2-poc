@@ -185,4 +185,4 @@ services:
     ports:
       - "80:3000"
     environment:
-      DATABASE_URL: postgres://my_user:S3cret@localhost:5432/my_db
+      DATABASE_URL: postgres://my_user:S3cret@postgres:5432/my_db
