@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { statusMap } from "./status";
 
-const BACKEND_URL = `http://${import.meta.env.VITE_BACKEND_URL}`;
-
 function Dashboard() {
   const [fileList, setFileList] = useState<File[]>([]);
   const [events, setStatus] = useState<any>([]);
@@ -27,7 +25,7 @@ function Dashboard() {
       formData.append("files", file);
     });
 
-    await fetch("http://localhost:4000/upload", {
+    await fetch("/upload", {
       method: "POST",
       body: formData,
     })
@@ -46,7 +44,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    const eventSource = new EventSource(`${BACKEND_URL}/sse`);
+    const eventSource = new EventSource(`/sse`);
     // Handle SSE messages
     eventSource.onmessage = (event) => {
       setStatus((prevStatus: any) => {
@@ -60,7 +58,7 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    fetch(`${BACKEND_URL}/job_history`)
+    fetch(`/job_history`)
       .then((res) => res.json())
       .then((data) => {
         if (data.length === 0) {
