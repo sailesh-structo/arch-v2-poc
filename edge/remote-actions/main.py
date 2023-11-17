@@ -33,7 +33,8 @@ try:
         if msg is None:
             continue
         if msg.error():
-            if msg.error().code() == Consumer.ERR__PARTITION_EOF:
+            if msg.error().code() == 3:
+                print(f"Topic not created yet: {source_topic_name}")
                 continue
             else:
                 print(f"Error while consuming message: {msg.error()}")

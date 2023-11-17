@@ -7,7 +7,8 @@ docker exec -it postgres  psql  -U my_user -d my_db
 
 kcat -b localhost:9093 -C -t start_job
 kcat -b localhost:9093 -P -t start_job
-{"jobId":"remote-job-4","filePath":"/uploads/sample2.txt","machineId":"sailesh-mac"}
+{"jobId":"remote-job-1","filePath":"/uploads/sample2.txt","machineId":"sailesh-mac"}
+{"jobId":"remote-job-2","filePath":"/uploads/sample2.txt","machineId":"bizarre-fox"}
 
 kafkacat -b localhost:9093 -C -t output
 
