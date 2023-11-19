@@ -73,7 +73,6 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
-      CONNECT_SCHEDULED_REBALANCE_MAX_DELAY_MS: 60000
     volumes:
       - ./connect/configs/output-topic-sink.json:/etc/kafka-connect/output-topic-sink.json
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
@@ -139,7 +138,6 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
-      CONNECT_SCHEDULED_REBALANCE_MAX_DELAY_MS: 60000
     volumes:
       - ./connect/configs/output-topic-sink.properties:/etc/kafka-connect/output-topic-sink.json
       - ./connect/jars/kafka-connect-jdbc-10.7.4.jar:/usr/share/java/kafka-connect-jdbc/jars/kafka-connect-jdbc-10.7.4.jar
