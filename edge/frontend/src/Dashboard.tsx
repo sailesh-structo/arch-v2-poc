@@ -64,7 +64,7 @@ function Dashboard() {
         if (data.length === 0) {
           return null;
         }
-        const lastState = data[data.length - 1];
+        const lastState = data[0];
         setLastState(lastState);
         setTotalJobs(data.length);
         return;

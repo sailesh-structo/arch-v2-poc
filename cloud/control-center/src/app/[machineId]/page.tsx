@@ -20,6 +20,11 @@ export default async function MachineDetails({
               Machine ID: {params.machineId}
             </h1>
           </div>
+          {jobs?.length ? (
+            <div className="flex flex-col gap-5">
+              <span className="text-2xl">Total Jobs: {jobs?.length}</span>
+            </div>
+          ) : null}
           {jobs?.map((job) => {
             return (
               <div

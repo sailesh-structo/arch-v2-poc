@@ -1,5 +1,5 @@
 import os
-from confluent_kafka import Consumer, Producer
+from confluent_kafka import Consumer, Producer, KafkaError
 
 # Configure the source and target Kafka brokers
 source_broker = os.environ.get('SOURCE_BROKER')  # Replace with the address of the source broker
@@ -33,8 +33,11 @@ try:
         if msg is None:
             continue
         if msg.error():
-            if msg.error().code() == 3:
-                print(f"Topic not created yet: {source_topic_name}")
+            if msg.error().code() == KafkaError._PARTITION_EOF:
+                print(f"End of partition event: {msg.error()}")
+                continue
+            if msg.error().code() == KafkaError.UNKNOWN_TOPIC_OR_PART:
+                print(f"Topic not yet created: {msg.error()}")
                 continue
             else:
                 print(f"Error while consuming message: {msg.error()}")
@@ -50,4 +53,3 @@ finally:
     consumer.close()
     producer.flush()
 
-print("Message replication completed.")

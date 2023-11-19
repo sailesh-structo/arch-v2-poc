@@ -18,6 +18,11 @@ export default async function Home() {
             {hello ? hello.greeting : "Loading tRPC query..."}
           </p>
         </div>
+        {jobs?.length ? (
+          <div className="flex flex-col gap-5">
+            <span className="text-2xl">Total Jobs: {jobs?.length}</span>
+          </div>
+        ) : null}
         <div className="flex flex-col gap-5">
           {jobs?.map((job) => {
             return (

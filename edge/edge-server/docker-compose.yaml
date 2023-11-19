@@ -70,6 +70,7 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
       CONNECTOR_PLUGINS: /usr/share/java
       CONNECTOR_CLASSPATH: /usr/share/java
+      CONNECT_SCHEDULED_REBALANCE_MAX_DELAY_MS: 60000
     depends_on:
       - kafka
     volumes:
